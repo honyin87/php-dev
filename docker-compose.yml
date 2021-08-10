@@ -1,0 +1,44 @@
+version: "3"
+services: 
+    php-server:
+        build: ./php/
+        networks: 
+            - frontend
+            - backend
+        volumes:
+            - ./php/public_html/:/var/www/html/
+            # - ./php/config/:/usr/local/etc/php/
+            # - ./php/config/:/usr/local/apache2/conf/
+        ports:
+            - 8080:80
+            - 8443:443
+        depends_on:
+            - mysql
+    mysql:
+        image: mysql
+        networks: 
+            - backend
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpassword
+        ports:
+            - 3306:3306
+        volumes: 
+            - ./mysql/data:/var/lib/mysql
+        restart: always
+    phpmyadmin:
+        image: phpmyadmin
+        networks: 
+            - backend
+        environment:
+            - PMA_HOST=mysql
+            - PMA_USER=root
+            - PMA_PASSWORD=rootpassword
+            - MYSQL_ROOT_PASSWORD=rootpassword
+        ports:
+            - 9090:80
+        depends_on:
+            - mysql
+        restart: always
+networks:
+    frontend:
+    backend:
