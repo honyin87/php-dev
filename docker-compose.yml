@@ -6,11 +6,12 @@ services:
             - frontend
             - backend
         volumes:
-            - ./php/public_html/:/var/www/html/
+            - C:/xampp/htdocs/:/var/www/html/
+            # - ./php/public_html/:/var/www/html/
             # - ./php/config/:/usr/local/etc/php/
             # - ./php/config/:/usr/local/apache2/conf/
         ports:
-            - 8080:80
+            - 1010:80
             - 8443:443
         depends_on:
             - mysql
@@ -21,7 +22,7 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=rootpassword
         ports:
-            - 3306:3306
+            - 13306:3306
         volumes: 
             - ./mysql/data:/var/lib/mysql
         restart: always
