@@ -40,6 +40,17 @@ services:
         depends_on:
             - mysql
         restart: always
+    redis:
+        image: redis
+        networks:
+            - backend
+        command: redis-server --save 60 1 --loglevel warning
+        volumes: 
+            - ./redis/cache:/data
+        ports:
+            - 6379:6379
+        restart:
+            always
 networks:
     frontend:
     backend:
